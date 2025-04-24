@@ -4,13 +4,12 @@ import 'home_screen.dart';        // Screen for the 'Home' tab
 import 'library_screen.dart';    // Screen for the 'Library' tab
 import 'journal_screen.dart';    // Screen for the 'Journal' tab
 import 'history_screen.dart';    // Screen for the 'History' tab
-// import 'settings_screen.dart'; // <<<=== REMOVED IMPORT (file doesn't exist yet)
+import 'settings_screen.dart';   // <<<=== RE-ADD IMPORT for Settings
 
 // This widget manages the main app layout with BottomNavigationBar
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key}); // Keep constructor const
+  const MainScreen({super.key});
 
-  // *** FIX: Added missing createState override ***
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -23,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     LibraryScreen(),
-    JournalScreen(), // Added Journal Screen
+    JournalScreen(), // Journal Screen widget
     HistoryScreen(),
   ];
 
@@ -46,40 +45,37 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_appBarTitles[_selectedIndex]),
+        title: Text(_appBarTitles[_selectedIndex]), // Dynamic title
         actions: [
+          // Button to navigate to the Settings screen
           IconButton(
             icon: const Icon(Icons.settings_outlined),
-            tooltip: 'Settings',
-            // *** FIX: Added required onPressed callback ***
+            tooltip: 'Settings', // Accessibility text
             onPressed: () {
-              // TODO: Navigate to SettingsScreen when created
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              // );
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Settings screen not implemented yet!'), duration: Duration(seconds: 2))
-              ); // Placeholder action
+              // Navigate to the SettingsScreen when tapped
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
             },
           ),
         ],
-        // AppBar theme is inherited from main.dart
+        // Theme inherited from main.dart
       ),
-      // Body uses IndexedStack for smoother tab switching
+      // Body uses IndexedStack for preserving state between tab switches
       body: Center(
         child: IndexedStack(
           index: _selectedIndex,
           children: _widgetOptions,
         ),
       ),
-      // Bottom navigation bar for switching sections
+      // Bottom navigation bar for switching main sections
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // Needed for 4+ items
+        type: BottomNavigationBarType.fixed, // Ensures all labels are visible
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
+            activeIcon: Icon(Icons.home), // Filled icon when active
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -87,20 +83,20 @@ class _MainScreenState extends State<MainScreen> {
             activeIcon: Icon(Icons.library_books),
             label: 'Library',
           ),
-          BottomNavigationBarItem( // Journal Tab
+          BottomNavigationBarItem( // Journal Tab Item
             icon: Icon(Icons.edit_note_outlined),
             activeIcon: Icon(Icons.edit_note),
             label: 'Journal',
           ),
-          BottomNavigationBarItem( // History Tab
+          BottomNavigationBarItem( // History Tab Item
             icon: Icon(Icons.history_outlined),
             activeIcon: Icon(Icons.history),
             label: 'History',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        // Theme is inherited from main.dart
+        currentIndex: _selectedIndex, // Highlight the selected tab
+        onTap: _onItemTapped, // Callback when a tab is tapped
+        // Theme inherited from main.dart
       ),
     );
   }
