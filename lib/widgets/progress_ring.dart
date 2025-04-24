@@ -2,19 +2,19 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math; // Needed for pi calculation
 
-// Animated progress ring widget
+// Animated progress ring widget displaying break progress
 class ProgressRing extends StatefulWidget {
-  final double progress; // Target progress (0.0 to 1.0)
-  final int currentDay;
-  final int totalDays;
-  final Duration duration; // Animation duration
+  final double progress; // Target progress value (0.0 to 1.0)
+  final int currentDay; // Day number to display
+  final int totalDays;  // Total days in the break (e.g., 28)
+  final Duration duration; // Duration of the animation
 
   const ProgressRing({
     super.key,
     required this.progress,
     required this.currentDay,
     required this.totalDays,
-    this.duration = const Duration(milliseconds: 800), // Default animation duration
+    this.duration = const Duration(milliseconds: 1000), // Slightly longer duration (1 second)
   });
 
   @override
@@ -22,39 +22,50 @@ class ProgressRing extends StatefulWidget {
 }
 
 class _ProgressRingState extends State<ProgressRing>
-    with SingleTickerProviderStateMixin { // Mixin for AnimationController vsync
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  double _currentAnimatedProgress = 0.0; // Tracks the animated value
+    with SingleTickerProviderStateMixin { // Mixin needed for AnimationController
+
+  late AnimationController _controller; // Controls the animation timing
+  late Animation<double> _animation;    // Defines the animation value curve
+  double _currentAnimatedProgress = 0.0; // Stores the current value during animation
 
   @override
   void initState() {
     super.initState();
-    // Initialize the AnimationController
+    // Initialize the controller with the specified duration
     _controller = AnimationController(
-      duration: widget.duration, // Use duration passed from widget
-      vsync: this, // Required by the mixin
+      duration: widget.duration,
+      vsync: this, // Provides ticker for animation frames
     );
 
-    // Create a Tween animation from 0.0 to the target progress
-    _updateAnimation(0.0, widget.progress); // Initial animation setup
+    // Set up the initial animation (from 0 to the initial target progress)
+    _updateAnimation(0.0, widget.progress);
 
-    // Start the animation
-    _controller.forward();
+    // Start the animation shortly after the widget builds
+    // Use addPostFrameCallback for potentially smoother start
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(mounted) { // Check if widget is still mounted before starting animation
+        _controller.forward();
+      }
+    });
+    // _controller.forward(); // Alternative: start immediately
   }
 
-  // Helper to update the animation when the target progress changes
-  void _updateAnimation(double oldTarget, double newTarget) {
-    // Create a curved animation for smoother easing (e.g., easeInOut)
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
-    // Create a Tween to animate between the *current animated value* and the new target
-    _animation = Tween<double>(begin: _currentAnimatedProgress, end: newTarget.clamp(0.0, 1.0))
-        .animate(_animation)
+  // Helper function to create/update the animation tween
+  void _updateAnimation(double oldAnimatedValue, double newTarget) {
+    // Use a CurvedAnimation for smooth easing (e.g., easeOut, easeInOut)
+    final curvedAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeOutExpo); // Try easeOutExpo for a nice effect
+
+    // Create a Tween that animates from the current animated value to the new target progress
+    // Clamp the target to ensure it stays within 0.0 and 1.0
+    _animation = Tween<double>(begin: oldAnimatedValue, end: newTarget.clamp(0.0, 1.0))
+        .animate(curvedAnimation) // Apply the curve to the tween
       ..addListener(() {
-        // Update the state whenever the animation value changes
-        setState(() {
-          _currentAnimatedProgress = _animation.value;
-        });
+        // Rebuild the widget whenever the animation value changes
+        if (mounted) { // Check if widget is mounted before calling setState
+          setState(() {
+            _currentAnimatedProgress = _animation.value; // Update the animated value
+          });
+        }
       });
   }
 
@@ -62,13 +73,14 @@ class _ProgressRingState extends State<ProgressRing>
   @override
   void didUpdateWidget(ProgressRing oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // If the target progress changes, update and restart the animation
+    // If the target progress passed to the widget changes...
     if (oldWidget.progress != widget.progress) {
-      _updateAnimation(_currentAnimatedProgress, widget.progress); // Update animation target
-      _controller.reset(); // Reset controller
-      _controller.forward(); // Start animation towards new target
+      // Update the animation to target the new progress value
+      _updateAnimation(_currentAnimatedProgress, widget.progress);
+      // Reset and restart the animation controller
+      _controller.forward(from: 0.0); // Restart animation from the beginning
     }
-    // Also update duration if it changes
+    // Update controller duration if the widget's duration property changes
     if (oldWidget.duration != widget.duration) {
       _controller.duration = widget.duration;
     }
@@ -76,27 +88,28 @@ class _ProgressRingState extends State<ProgressRing>
 
   @override
   void dispose() {
-    _controller.dispose(); // Dispose controller to free resources
+    _controller.dispose(); // Important: Dispose controller to prevent memory leaks
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Theme.of(context); // Access theme for colors
 
+    // Build the visual representation
     return AspectRatio(
-      aspectRatio: 1.0, // Maintain square shape
+      aspectRatio: 1.0, // Ensure the widget is square
       child: Padding(
-        padding: const EdgeInsets.all(16.0), // Padding around the ring
+        padding: const EdgeInsets.all(16.0), // Padding around the drawing area
         child: CustomPaint(
-          // Use the *animated* progress value for the painter
+          // Pass the *current animated progress* value to the painter
           painter: _RingPainter(
             progress: _currentAnimatedProgress,
-            foregroundColor: theme.colorScheme.primary, // Teal
-            backgroundColor: theme.colorScheme.primary.withOpacity(0.2), // Lighter teal
-            strokeWidth: 15.0,
+            foregroundColor: theme.colorScheme.primary, // Use theme's primary color
+            backgroundColor: theme.colorScheme.primary.withOpacity(0.2), // Use lighter primary for track
+            strokeWidth: 15.0, // Thickness of the ring
           ),
-          // Center text content remains the same
+          // Display the day count text in the center
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -108,14 +121,14 @@ class _ProgressRingState extends State<ProgressRing>
                   ),
                 ),
                 Text(
-                  '${widget.currentDay}', // Use widget.currentDay
+                  '${widget.currentDay}', // Display current day number
                   style: theme.textTheme.displayMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.primary,
+                    color: theme.colorScheme.primary, // Highlight number with primary color
                   ),
                 ),
                 Text(
-                  '/ ${widget.totalDays}', // Use widget.totalDays
+                  '/ ${widget.totalDays}', // Display total days
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurface.withOpacity(0.7),
                   ),
@@ -129,9 +142,9 @@ class _ProgressRingState extends State<ProgressRing>
   }
 }
 
-// Custom Painter to draw the ring (remains largely the same, uses passed progress)
+// Custom Painter class responsible for drawing the ring (No changes needed here from previous version)
 class _RingPainter extends CustomPainter {
-  final double progress; // Current animated progress (0.0 to 1.0)
+  final double progress;
   final Color foregroundColor;
   final Color backgroundColor;
   final double strokeWidth;
@@ -147,39 +160,34 @@ class _RingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = math.min(size.width, size.height) / 2 - strokeWidth / 2;
-    const startAngle = -math.pi / 2; // Start drawing from the top center
-    final sweepAngle = 2 * math.pi * progress; // Calculate angle based on progress
+    const startAngle = -math.pi / 2; // Start at the top (12 o'clock)
+    final sweepAngle = 2 * math.pi * progress; // Calculate sweep based on progress
 
-    // Define paint for the background ring track
     final backgroundPaint = Paint()
       ..color = backgroundColor
-      ..style = PaintingStyle.stroke // Draw only the stroke
+      ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.round; // Use rounded ends
+      ..strokeCap = StrokeCap.round;
 
-    // Define paint for the foreground progress arc
     final foregroundPaint = Paint()
       ..color = foregroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.round; // Use rounded ends
+      ..strokeCap = StrokeCap.round;
 
-    // Draw the background circle first
-    canvas.drawCircle(center, radius, backgroundPaint);
-
-    // Draw the progress arc over the background
-    canvas.drawArc(
-      Rect.fromCircle(center: center, radius: radius), // Define drawing area
-      startAngle, // Start angle (top)
-      sweepAngle, // Angle to sweep based on progress
-      false, // Draw arc only, not connecting to center
-      foregroundPaint, // Use foreground paint settings
+    canvas.drawCircle(center, radius, backgroundPaint); // Draw background track
+    canvas.drawArc( // Draw progress arc
+      Rect.fromCircle(center: center, radius: radius),
+      startAngle,
+      sweepAngle,
+      false,
+      foregroundPaint,
     );
   }
 
   @override
   bool shouldRepaint(covariant _RingPainter oldDelegate) {
-    // Repaint only if the animated progress value or appearance changes
+    // Repaint if progress or appearance changes
     return oldDelegate.progress != progress ||
         oldDelegate.foregroundColor != foregroundColor ||
         oldDelegate.backgroundColor != backgroundColor ||

@@ -29,10 +29,14 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // TODO: Replace with Image.asset('assets/images/logo.png') when logo is ready
-            Icon(
-              Icons.spa_outlined, // Placeholder icon (wellness/clarity)
-              size: 80.0,
-              color: theme.colorScheme.primary, // Use primary theme color
+            Image.asset( // Display logo or placeholder
+              'assets/images/logo.png', // <<<=== YOUR LOGO PATH HERE
+              height: 100,
+              errorBuilder: (ctx, err, st) => Icon( // Fallback icon
+                Icons.spa_outlined, // Placeholder icon (wellness/clarity)
+                size: 80.0,
+                color: theme.colorScheme.primary, // Use primary theme color
+              ),
             ),
             const SizedBox(height: 20), // Spacing
             Text(
@@ -46,7 +50,8 @@ class SplashScreen extends StatelessWidget {
         ),
       ),
       // Screen to navigate to after splash duration
-      nextScreen: const MainScreen(), // Navigate to the main app screen
+      // *** FIX: Removed 'const' because MainScreen is StatefulWidget ***
+      nextScreen: MainScreen(), // Navigate to the main app screen
     );
   }
 }

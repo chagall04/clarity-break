@@ -1,11 +1,12 @@
 // lib/screens/article_list_screen.dart
+
 import 'package:flutter/material.dart';
-import '../models/library_category.dart'; // Category model
-import '../models/library_article.dart'; // Article model
-import 'article_detail_screen.dart'; // Screen to show article content
+import '../models/library_category.dart';
+import '../models/library_article.dart';
+import 'article_detail_screen.dart';
 
 class ArticleListScreen extends StatelessWidget {
-  final LibraryCategory category; // Receive the category to display
+  final LibraryCategory category;
 
   const ArticleListScreen({super.key, required this.category});
 
@@ -13,41 +14,35 @@ class ArticleListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      // Add an AppBar specific to this screen
-      appBar: AppBar(
-        title: Text(category.title), // Show category title in AppBar
-        // backgroundColor: theme.colorScheme.surface, // Use theme's AppBar settings
-        // foregroundColor: theme.colorScheme.onSurface,
-        elevation: 1.0,
-      ),
+      appBar: AppBar(title: Text(category.title), elevation: 1),
       body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         itemCount: category.articles.length,
-        itemBuilder: (context, index) {
-          final article = category.articles[index];
+        itemBuilder: (ctx, idx) {
+          final art = category.articles[idx];
           return Card(
             clipBehavior: Clip.antiAlias,
+            margin: const EdgeInsets.symmetric(vertical: 6),
             child: ListTile(
-              // Maybe add a simple leading icon like Icons.article_outlined
-              leading: Icon(Icons.article_outlined, color: theme.colorScheme.secondary),
-              title: Text(
-                article.title,
-                style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
+              leading: Icon(Icons.article_outlined,
+                  color: theme.colorScheme.secondary),
+              title: Hero(
+                tag: 'hero-${art.articleId}',
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(art.title,
+                      style: theme.textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.w500)),
+                ),
               ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: theme.colorScheme.onSurface.withOpacity(0.5),
+              trailing: Icon(Icons.arrow_forward_ios,
+                  size: 16,
+                  color: theme.colorScheme.onSurface.withOpacity(0.5)),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => ArticleDetailScreen(article: art)),
               ),
-              onTap: () {
-                // Navigate to the ArticleDetailScreen, passing the selected article
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ArticleDetailScreen(article: article),
-                  ),
-                );
-              },
             ),
           );
         },

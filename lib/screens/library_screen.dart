@@ -1,12 +1,16 @@
-// lib/screens/library_screen.dart
-import 'package:flutter/material.dart';
-import '../services/library_service.dart'; // Service to load categories/articles
-import '../models/library_category.dart'; // Category model
-import '../models/library_article.dart';  // Article model (needed for filtering results)
-import 'article_list_screen.dart';    // Screen to show articles in a category
-import 'article_detail_screen.dart'; // Screen to show individual article detail
+import 'dart:async';
 
-// Screen displaying knowledge library categories and search functionality
+import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../services/library_service.dart';
+import '../services/bookmark_service.dart';
+import '../services/history_service.dart';
+import '../models/library_category.dart';
+import '../models/library_article.dart';
+import '../widgets/highlight_text.dart';
+import 'article_detail_screen.dart';
+
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
 
@@ -16,226 +20,437 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen> {
   final LibraryService _libraryService = LibraryService();
-  Future<List<LibraryCategory>>? _categoriesFuture; // Future for initial category load
-  List<LibraryCategory> _allCategories = []; // Stores all loaded categories
-  List<dynamic> _searchResults = []; // Stores filtered results (can be categories or articles)
-  String _searchQuery = ''; // Current search text
-  final TextEditingController _searchController = TextEditingController(); // Controller for search field
+  Future<List<LibraryCategory>>? _categoriesFuture;
+
+  final PageController _pageController = PageController(viewportFraction: 0.85);
+  Timer? _carouselTimer;
+  int _currentPage = 0;
+
+  List<LibraryCategory> _allCategories = [];
+  List<LibraryCategory> _filteredCategories = [];
+
+  // Tag filtering
+  List<String> _allTags = [];
+  Set<String> _selectedTags = {};
+
+  // Featured articles
+  List<LibraryArticle> _featured = [];
+
+  // Recent searches & views
+  List<String> _recentSearches = [];
+  List<LibraryArticle> _recentViews = [];
+
+  String _searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Load categories when the screen initializes
-    _categoriesFuture = _libraryService.loadCategories().then((categories) {
-      setState(() {
-        _allCategories = categories; // Store all categories once loaded
-        _filterResults(); // Initially show all categories
-      });
-      return categories; // Return for FutureBuilder
+    _categoriesFuture = _libraryService.loadCategories().then((cats) {
+      _allCategories = cats;
+      _extractTagsAndFeatured();
+      _loadRecents();
+      _applyFilter();
+      _startAutoScroll();
+      return cats;
     });
-
-    // Listen to changes in the search field
     _searchController.addListener(() {
-      if (_searchController.text != _searchQuery) {
-        setState(() {
-          _searchQuery = _searchController.text;
-          _filterResults(); // Re-filter results when query changes
-        });
+      _searchQuery = _searchController.text.trim();
+      HistoryService().addSearch(_searchQuery);
+      _loadRecentSearches();
+      _applyFilter();
+    });
+    _loadRecentSearches();
+  }
+
+  void _extractTagsAndFeatured() {
+    final tags = <String>{};
+    final featured = <LibraryArticle>[];
+    for (var cat in _allCategories) {
+      for (var art in cat.articles) {
+        tags.addAll(art.tags);
+        if (art.featured) featured.add(art);
       }
+    }
+    setState(() {
+      _allTags = tags.toList()..sort();
+      _featured = featured;
+    });
+  }
+
+  Future<void> _loadRecents() async {
+    final ids = await HistoryService().getViews();
+    final all = _allCategories.expand((c) => c.articles).toList();
+    setState(() {
+      _recentViews = ids
+          .map((id) => all.firstWhereOrNull((a) => a.articleId == id))
+          .whereType<LibraryArticle>()
+          .toList();
+    });
+  }
+
+  Future<void> _loadRecentSearches() async {
+    final terms = await HistoryService().getSearches();
+    setState(() {
+      _recentSearches = terms;
+    });
+  }
+
+  void _applyFilter() {
+    final q = _searchQuery.toLowerCase();
+    setState(() {
+      _filteredCategories = _allCategories.map((cat) {
+        final matchesCat = cat.title.toLowerCase().contains(q);
+        final articles = cat.articles.where((a) {
+          final inSearch = a.title.toLowerCase().contains(q) ||
+              a.content.toLowerCase().contains(q);
+          final inTag = _selectedTags.isEmpty
+              ? true
+              : a.tags.any(_selectedTags.contains);
+          return inSearch && inTag;
+        }).toList();
+        if (matchesCat && _selectedTags.isEmpty && q.isEmpty) {
+          return LibraryCategory(
+            id: cat.id,
+            title: cat.title,
+            iconName: cat.iconName,
+            articles: cat.articles,
+          );
+        }
+        if (articles.isNotEmpty) {
+          return LibraryCategory(
+            id: cat.id,
+            title: cat.title,
+            iconName: cat.iconName,
+            articles: articles,
+          );
+        }
+        return null;
+      }).whereType<LibraryCategory>().toList();
+    });
+  }
+
+  void _startAutoScroll() {
+    _carouselTimer?.cancel();
+    _carouselTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (_featured.isEmpty) return;
+      _currentPage = (_currentPage + 1) % _featured.length;
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
   @override
   void dispose() {
-    _searchController.dispose(); // Dispose controller when screen is removed
+    _carouselTimer?.cancel();
+    _pageController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
-  // Filter categories and articles based on the search query
-  void _filterResults() {
-    if (_searchQuery.isEmpty) {
-      // If query is empty, show all categories
-      _searchResults = List.from(_allCategories); // Make a copy
-    } else {
-      final queryLower = _searchQuery.toLowerCase();
-      List<dynamic> results = [];
-      // Search through categories and their articles
-      for (var category in _allCategories) {
-        bool categoryMatch = category.title.toLowerCase().contains(queryLower);
-        List<LibraryArticle> matchingArticles = [];
-
-        for (var article in category.articles) {
-          if (article.title.toLowerCase().contains(queryLower) ||
-              article.content.toLowerCase().contains(queryLower)) {
-            matchingArticles.add(article);
-          }
-        }
-        // Add category if it matches OR if it has matching articles
-        if (categoryMatch || matchingArticles.isNotEmpty) {
-          // If only articles matched, add category header first
-          if (!results.contains(category) && matchingArticles.isNotEmpty && !categoryMatch) {
-            // Add a special marker or the category itself to indicate a header is needed
-            // For simplicity, let's just add the category if articles match
-            if (!results.contains(category)) {
-              results.add(category); // Add category header if needed
-            }
-          } else if (categoryMatch) {
-            if (!results.contains(category)) {
-              results.add(category); // Add category if title matches
-            }
-          }
-          // Add all matching articles under this category
-          results.addAll(matchingArticles);
-        }
-      }
-      _searchResults = results;
+  IconData _iconForCategory(String name) {
+    switch (name) {
+      case 'science':
+        return Icons.science_outlined;
+      case 'checklist':
+        return Icons.checklist_rtl;
+      case 'restart_alt':
+        return Icons.restart_alt;
+      case 'gavel':
+        return Icons.gavel_outlined;
+      case 'people':
+        return Icons.people_outline;
+      default:
+        return Icons.book_outlined;
     }
   }
 
-
-  // Helper to get an icon based on the name hint from JSON
-  IconData _getIconForCategory(String iconName) {
-    switch (iconName) {
-      case 'science': return Icons.science_outlined;
-      case 'checklist': return Icons.checklist_rtl_outlined;
-      case 'restart_alt': return Icons.restart_alt_outlined;
-      default: return Icons.library_books_outlined;
-    }
-  }
-
-  // Find the category an article belongs to (needed for navigation)
-  LibraryCategory? _findCategoryForArticle(LibraryArticle article) {
-    for (var category in _allCategories) {
-      if (category.articles.any((a) => a.id == article.id)) {
-        return category;
-      }
-    }
-    return null;
+  void _openDetail(LibraryArticle art) {
+    HistoryService().addView(art.articleId);
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => ArticleDetailScreen(article: art),
+        transitionsBuilder: (_, anim, __, child) =>
+            FadeTransition(opacity: anim, child: child),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
-      // AppBar handled by MainScreen, but we add a search field below it
-      body: Column( // Use Column to stack Search Field + List
-        children: [
-          // --- Search Bar ---
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search Library...',
-                prefixIcon: const Icon(Icons.search),
-                // Use filled style for modern look
-                // filled: true, // Style from theme
-                // fillColor: theme.inputDecorationTheme.fillColor, // Style from theme
-                // border: InputBorder.none, // Style from theme (usually OutlineInputBorder)
-                // focusedBorder: InputBorder.none, // Style from theme
-                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16), // Adjust padding
-                // Add clear button
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    _searchController.clear(); // Clears text and triggers listener
+      appBar: AppBar(title: const Text('Library'), elevation: 1),
+      body: FutureBuilder<List<LibraryCategory>>(
+        future: _categoriesFuture,
+        builder: (context, snap) {
+          if (snap.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snap.hasError) {
+            return Center(child: Text('Error: ${snap.error}'));
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Search
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search articles…',
+                    prefixIcon: const Icon(Icons.search),
+                    filled: true,
+                    fillColor: theme.colorScheme.surfaceVariant,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  onSubmitted: (_) => _applyFilter(),
+                ),
+              ),
+
+              // Recent searches
+              if (_recentSearches.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Wrap(
+                    spacing: 6,
+                    children: _recentSearches.map((term) {
+                      return ActionChip(
+                        label: Text(term),
+                        onPressed: () {
+                          _searchController.text = term;
+                          _searchQuery = term;
+                          _applyFilter();
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+              // Tags
+              if (_allTags.isNotEmpty)
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Row(
+                    children: _allTags.map((tag) {
+                      final sel = _selectedTags.contains(tag);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: ChoiceChip(
+                          label: Text(tag),
+                          selected: sel,
+                          onSelected: (v) {
+                            setState(() {
+                              if (v) _selectedTags.add(tag);
+                              else _selectedTags.remove(tag);
+                              _applyFilter();
+                            });
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+              // Featured carousel + indicator
+              if (_featured.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: SizedBox(
+                    height: 200,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onPanDown: (_) => _carouselTimer?.cancel(),
+                            onPanEnd: (_) => _startAutoScroll(),
+                            child: PageView.builder(
+                              controller: _pageController,
+                              itemCount: _featured.length,
+                              onPageChanged: (i) =>
+                                  setState(() => _currentPage = i),
+                              itemBuilder: (c, i) {
+                                final art = _featured[i];
+                                return _FeaturedCard(
+                                  article: art,
+                                  onTap: () => _openDetail(art),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        SmoothPageIndicator(
+                          controller: _pageController,
+                          count: _featured.length,
+                          effect: WormEffect(
+                            dotColor:
+                            theme.colorScheme.onSurface.withOpacity(0.3),
+                            activeDotColor: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+              const Divider(height: 1),
+
+              // Categories
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: _filteredCategories.length,
+                  itemBuilder: (ctx, idx) {
+                    final cat = _filteredCategories[idx];
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      child: ExpansionTile(
+                        leading: Icon(
+                          _iconForCategory(cat.iconName),
+                          color: theme.colorScheme.primary,
+                        ),
+                        title: Text(cat.title,
+                            style: theme.textTheme.titleMedium),
+                        children: cat.articles.map((article) {
+                          // build snippet
+                          final snippet = article.content
+                              .split('\n')
+                              .firstWhereOrNull(
+                                  (s) => s
+                                  .toLowerCase()
+                                  .contains(_searchQuery.toLowerCase()))
+                              ?.trim() ??
+                              '';
+                          return ListTile(
+                            leading: FutureBuilder<bool>(
+                              future: BookmarkService()
+                                  .isBookmarked(article.articleId),
+                              builder: (c, s) {
+                                final bm = s.data ?? false;
+                                return IconButton(
+                                  icon: Icon(
+                                    bm
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: bm
+                                        ? theme.colorScheme.primary
+                                        : theme.colorScheme.onSurface,
+                                  ),
+                                  onPressed: () async {
+                                    await BookmarkService()
+                                        .toggle(article.articleId);
+                                    setState(() {});
+                                  },
+                                );
+                              },
+                            ),
+                            title: GestureDetector(
+                              onTap: () => _openDetail(article),
+                              child: Hero(
+                                tag: 'hero-${article.articleId}',
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: HighlightText(
+                                    text: article.title,
+                                    query: _searchQuery,
+                                    style: theme.textTheme.bodyLarge,
+                                    highlightStyle: theme.textTheme.bodyLarge
+                                        ?.copyWith(
+                                        backgroundColor: theme
+                                            .colorScheme.primary
+                                            .withOpacity(0.2)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            subtitle: snippet.isEmpty
+                                ? null
+                                : HighlightText(
+                              text: '$snippet…',
+                              query: _searchQuery,
+                              style: theme.textTheme.bodySmall
+                                  ?.copyWith(
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.6)),
+                              highlightStyle: theme.textTheme.bodySmall
+                                  ?.copyWith(
+                                  backgroundColor: theme
+                                      .colorScheme.primary
+                                      .withOpacity(0.2)),
+                            ),
+                            trailing:
+                            const Icon(Icons.chevron_right, size: 20),
+                            onTap: () => _openDetail(article),
+                          );
+                        }).toList(),
+                      ),
+                    );
                   },
-                )
-                    : null,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Helper featured card
+class _FeaturedCard extends StatelessWidget {
+  final LibraryArticle article;
+  final VoidCallback onTap;
+  const _FeaturedCard({required this.article, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Hero(
+          tag: 'hero-${article.articleId}',
+          child: Material(
+            elevation: 2,
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HighlightText(
+                    text: article.title,
+                    query: '',
+                    style: theme.textTheme.titleLarge,
+                  ),
+                  const Spacer(),
+                  Text(
+                    article.tags.join(' • '),
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.primary),
+                  ),
+                ],
               ),
             ),
           ),
-
-          // --- Results List ---
-          Expanded( // Make the list take remaining space
-            child: FutureBuilder<List<LibraryCategory>>(
-              // FutureBuilder still useful for initial loading state
-              future: _categoriesFuture,
-              builder: (context, snapshot) {
-                // Handle loading state
-                if (_allCategories.isEmpty && snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                // Handle error state
-                if (snapshot.hasError) {
-                  print('LibraryScreen Error: ${snapshot.error}');
-                  return Center(child: Text('Could not load library content.', style: TextStyle(color: theme.colorScheme.error)));
-                }
-                // Handle empty results after search
-                if (_searchResults.isEmpty && _searchQuery.isNotEmpty) {
-                  return Center(
-                    child: Text(
-                      'No results found for "$_searchQuery"',
-                      style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onBackground.withOpacity(0.7)),
-                      textAlign: TextAlign.center,
-                    ),
-                  );
-                }
-                // Handle initial empty state (before search) - shouldn't happen if JSON has content
-                if (_searchResults.isEmpty && _searchQuery.isEmpty && _allCategories.isEmpty && snapshot.connectionState != ConnectionState.waiting) {
-                  return Center(child: Text('Library is empty.', style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onBackground.withOpacity(0.7))));
-                }
-
-
-                // --- Build the list based on search results ---
-                return ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 8.0), // Adjust padding
-                  itemCount: _searchResults.length,
-                  itemBuilder: (context, index) {
-                    final item = _searchResults[index];
-
-                    // --- Display Category Header ---
-                    if (item is LibraryCategory) {
-                      // Show full category card only if NOT searching OR if category title matches
-                      bool showFullCard = _searchQuery.isEmpty || item.title.toLowerCase().contains(_searchQuery.toLowerCase());
-
-                      if (showFullCard) {
-                        return Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: ListTile(
-                            leading: Icon(_getIconForCategory(item.iconName), color: theme.colorScheme.primary, size: 32),
-                            title: Text(item.title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
-                            trailing: Icon(Icons.arrow_forward_ios, size: 16, color: theme.colorScheme.onSurface.withOpacity(0.5)),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ArticleListScreen(category: item)));
-                            },
-                          ),
-                        );
-                      } else {
-                        // If category doesn't match but contains matching articles, show a minimal header
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                          child: Text(
-                            item.title, // Category title as header
-                            style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary),
-                          ),
-                        );
-                      }
-                    }
-                    // --- Display Article Result ---
-                    else if (item is LibraryArticle) {
-                      // Find the category this article belongs to for context if needed
-                      final category = _findCategoryForArticle(item);
-                      return ListTile(
-                        // dense: true, // Make article results more compact
-                        leading: const Icon(Icons.article_outlined, size: 20),
-                        title: Text(item.title),
-                        subtitle: category != null ? Text(category.title, style: TextStyle(fontSize: 12, color: theme.colorScheme.primary.withOpacity(0.8))) : null, // Show category context
-                        trailing: Icon(Icons.arrow_forward_ios, size: 14, color: theme.colorScheme.onSurface.withOpacity(0.5)),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ArticleDetailScreen(article: item)));
-                        },
-                      );
-                    }
-                    // Fallback for unexpected item types
-                    return const SizedBox.shrink();
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
