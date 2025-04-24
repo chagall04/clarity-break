@@ -1,106 +1,131 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'screens/main_screen.dart'; // We will create this next
+import 'package:google_fonts/google_fonts.dart'; // Font styling package
+import 'package:provider/provider.dart';       // State management package
+import 'screens/splash_screen.dart';           // App splash screen
+import 'providers/break_provider.dart';        // Break state management
+import 'screens/main_screen.dart';             // Main navigation container
 
+// Entry point of the application
 void main() {
-  // runApp starts the Flutter application
-  runApp(const ClarityBreakApp());
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure bindings are ready
+  runApp(
+    // Provide BreakProvider state to the widget tree
+    ChangeNotifierProvider(
+      create: (context) => BreakProvider(),
+      child: const ClarityBreakApp(), // Root application widget
+    ),
+  );
 }
 
-// The root widget of the application
+// Root application widget definition
 class ClarityBreakApp extends StatelessWidget {
   const ClarityBreakApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Define the color scheme based on our plan
+    // --- Define App Color Scheme ---
     final ColorScheme colorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF4DB6AC), // Primary Teal Color
-      primary: const Color(0xFF4DB6AC),   // Teal
-      secondary: const Color(0xFF81C784), // Muted Green
-      tertiary: const Color(0xFFFFCCBC),  // Warm Sand/Peach (Accent)
-      background: const Color(0xFFF5F5F5), // Off-White Background
-      surface: Colors.white,               // Card backgrounds, dialogs etc.
-      onPrimary: Colors.white,             // Text/icons on top of primary color
-      onSecondary: Colors.black,           // Text/icons on top of secondary color
-      onTertiary: Colors.black,            // Text/icons on top of accent color
-      onBackground: const Color(0xFF424242), // Main text color on background
-      onSurface: const Color(0xFF424242),   // Main text color on surface
-      onError: Colors.white,
-      error: Colors.redAccent,             // A standard error color
+      seedColor: const Color(0xFF4DB6AC), // Base color for theme generation
+      primary: const Color(0xFF4DB6AC),   // Primary UI color (Teal)
+      secondary: const Color(0xFF81C784), // Secondary UI color (Green)
+      tertiary: const Color(0xFFFFCCBC),  // Accent UI color (Peach)
+      background: const Color(0xFFF5F5F5), // Default screen background
+      surface: Colors.white,               // Card, dialog backgrounds
+      onPrimary: Colors.white,             // Text on primary color
+      onSecondary: Colors.black,           // Text on secondary color
+      onTertiary: Colors.black,            // Text on tertiary color
+      onBackground: const Color(0xFF424242), // Default text color
+      onSurface: const Color(0xFF424242),   // Text on surface color
+      onError: Colors.white,               // Text on error color
+      error: Colors.redAccent,             // Error indication color
       brightness: Brightness.light,       // Use light theme mode
     );
 
-    // Define the base text theme using Google Fonts
-    final TextTheme baseTextTheme = GoogleFonts.latoTextTheme( // Body font
-      ThemeData(brightness: Brightness.light).textTheme, // Start with default light theme text styles
+    // --- Define Base Text Theme using Google Fonts ---
+    final TextTheme baseTextTheme = GoogleFonts.latoTextTheme(
+      ThemeData(brightness: Brightness.light).textTheme, // Base on default light styles
     );
 
-    // Define the final theme data
+    // --- Define Full App Theme ---
     final ThemeData themeData = ThemeData(
-      useMaterial3: true, // Enable Material 3 features
-      colorScheme: colorScheme,
-      scaffoldBackgroundColor: colorScheme.background, // Use the defined background color
+      useMaterial3: true, // Enable Material 3 design
+      colorScheme: colorScheme, // Apply the defined colors
+      scaffoldBackgroundColor: colorScheme.background, // Set default background
 
-      // Apply Google Fonts to the base text theme
+      // Apply custom fonts (Poppins for headings, Lato for body)
       textTheme: baseTextTheme.copyWith(
-        // Customize specific text styles if needed, using Poppins for headings
         displayLarge: GoogleFonts.poppins(textStyle: baseTextTheme.displayLarge?.copyWith(fontWeight: FontWeight.bold)),
         displayMedium: GoogleFonts.poppins(textStyle: baseTextTheme.displayMedium?.copyWith(fontWeight: FontWeight.bold)),
         displaySmall: GoogleFonts.poppins(textStyle: baseTextTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold)),
-        headlineLarge: GoogleFonts.poppins(textStyle: baseTextTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w600)), // SemiBold
+        headlineLarge: GoogleFonts.poppins(textStyle: baseTextTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w600)), // SemiBold headings
         headlineMedium: GoogleFonts.poppins(textStyle: baseTextTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600)),
         headlineSmall: GoogleFonts.poppins(textStyle: baseTextTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)),
         titleLarge: GoogleFonts.poppins(textStyle: baseTextTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
-        titleMedium: GoogleFonts.poppins(textStyle: baseTextTheme.titleMedium), // Keep default weight or adjust
+        titleMedium: GoogleFonts.poppins(textStyle: baseTextTheme.titleMedium),
         titleSmall: GoogleFonts.poppins(textStyle: baseTextTheme.titleSmall),
-        // Body styles will inherit from Lato as set above
-        // labelLarge is often used for buttons
-        labelLarge: GoogleFonts.poppins(textStyle: baseTextTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+        labelLarge: GoogleFonts.poppins(textStyle: baseTextTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)), // Button text
       ).apply(
-        // Apply default text colors from the color scheme
-        bodyColor: colorScheme.onBackground,
-        displayColor: colorScheme.onBackground,
+        bodyColor: colorScheme.onBackground, // Apply default text color
+        displayColor: colorScheme.onBackground, // Apply heading text color
       ),
 
-      // Customize other theme elements if needed
+      // --- Specific Component Themes ---
       appBarTheme: AppBarTheme(
-        backgroundColor: colorScheme.surface, // Or primary if you prefer colored AppBar
-        foregroundColor: colorScheme.onSurface, // Text/icon color on AppBar
-        elevation: 1.0, // Subtle elevation
-        titleTextStyle: GoogleFonts.poppins( // Ensure AppBar title uses Poppins
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        elevation: 1.0, // Subtle shadow
+        titleTextStyle: GoogleFonts.poppins( // Consistent AppBar title font
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: colorScheme.onSurface,
         ),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: colorScheme.primary, // Teal for selected item
-        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6), // Greyish for unselected
-        backgroundColor: colorScheme.surface, // Background color of the nav bar
-        selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w500), // Style for selected label
-        unselectedLabelStyle: GoogleFonts.poppins(), // Style for unselected label
+        selectedItemColor: colorScheme.primary, // Selected item color
+        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6), // Unselected item color
+        backgroundColor: colorScheme.surface, // Nav bar background
+        selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+        unselectedLabelStyle: GoogleFonts.poppins(),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.primary, // Teal background for buttons
-          foregroundColor: colorScheme.onPrimary, // White text for buttons
-          textStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+          backgroundColor: colorScheme.primary, // Button background
+          foregroundColor: colorScheme.onPrimary, // Button text color
+          textStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600), // Button font
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8), // Slightly rounded corners
+            borderRadius: BorderRadius.circular(12), // Rounded corners
           ),
         ),
       ),
-      // Add other theme customizations (CardTheme, InputDecorations, etc.) as needed
+      cardTheme: CardTheme(
+        elevation: 2.0, // Card shadow
+        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0), // Rounded card corners
+        ),
+        color: colorScheme.surface, // Card background color
+      ),
+      inputDecorationTheme: InputDecorationTheme( // Text field styling
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.3)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: colorScheme.primary, width: 2.0),
+        ),
+        labelStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.7)),
+      ),
     );
 
-    // MaterialApp is the root visual widget container
+    // --- Root MaterialApp Widget ---
     return MaterialApp(
       title: 'Clarity Break',
-      theme: themeData, // Apply the theme we just defined
-      debugShowCheckedModeBanner: false, // Hide the debug banner
-      home: const MainScreen(), // Set the initial screen of the app
+      theme: themeData, // Apply the defined theme
+      debugShowCheckedModeBanner: false, // Hide debug banner
+      home: const SplashScreen(), // Start with the splash screen
     );
   }
 }

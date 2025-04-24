@@ -1,10 +1,10 @@
+// lib/screens/main_screen.dart
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-import 'library_screen.dart';
-import 'history_screen.dart';
-// Import settings screen later if needed via AppBar icon
+import 'home_screen.dart';        // Screen for the 'Home' tab
+import 'library_screen.dart';    // Screen for the 'Library' tab
+import 'history_screen.dart';    // Screen for the 'History' tab
 
-// This widget manages the main navigation tabs (Home, Library, History)
+// This widget manages the main app layout with BottomNavigationBar
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -13,58 +13,48 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // Index of the currently selected tab
-  int _selectedIndex = 0;
+  int _selectedIndex = 0; // Index of the currently selected tab
 
-  // List of the widgets (screens) to display for each tab
+  // List of the screens corresponding to each tab
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     LibraryScreen(),
     HistoryScreen(),
   ];
 
-  // List of titles corresponding to each screen for the AppBar
+  // Titles for the AppBar corresponding to each tab
   static const List<String> _appBarTitles = <String>[
-    'Clarity Break', // Or maybe dynamic based on break status later
-    'Knowledge Library',
-    'Break History',
+    'Clarity Break', // Title for Home tab
+    'Knowledge Library', // Title for Library tab
+    'Break History', // Title for History tab
   ];
 
-  // Function called when a tab is tapped
+  // Function called when a bottom navigation tab is tapped
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index; // Update the selected index
+      _selectedIndex = index; // Update the state to switch tabs
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar that changes title based on the selected tab
+      // AppBar displays title based on the selected tab
       appBar: AppBar(
         title: Text(_appBarTitles[_selectedIndex]),
-        // Optionally add a settings icon button later
-        // actions: [
-        //   if (_selectedIndex == 0) // Show only on Home perhaps
-        //     IconButton(
-        //       icon: Icon(Icons.settings),
-        //       onPressed: () {
-        //         // Navigate to SettingsScreen
-        //       },
-        //     ),
-        // ],
+        // AppBar theme is inherited from main.dart
       ),
-      // Body displays the widget corresponding to the selected tab index
+      // Body displays the screen widget for the current index
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      // Bottom navigation bar
+      // Bottom navigation bar for switching sections
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home), // Use filled icon when active
-            label: 'Home',
+            icon: Icon(Icons.home_outlined), // Default icon
+            activeIcon: Icon(Icons.home),     // Icon when selected
+            label: 'Home',                   // Tab label
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books_outlined),
@@ -77,10 +67,9 @@ class _MainScreenState extends State<MainScreen> {
             label: 'History',
           ),
         ],
-        currentIndex: _selectedIndex, // Highlights the current tab
-        // selectedItemColor: Theme.of(context).colorScheme.primary, // Handled by theme
-        onTap: _onItemTapped, // Callback when a tab is tapped
-        // type: BottomNavigationBarType.fixed, // Ensures labels are always visible
+        currentIndex: _selectedIndex, // Highlight the current tab
+        onTap: _onItemTapped, // Set the callback for tap events
+        // Theme for colors/styles is inherited from main.dart
       ),
     );
   }
