@@ -1,26 +1,38 @@
 // lib/screens/settings_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../providers/break_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/journal_service.dart';
 import '../services/break_service.dart';
 import '../services/data_service.dart';
+import '../main.dart'; // for onboardingCompleteKey
 import 'faq_screen.dart';
+import 'onboarding_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
+  /// Marks onboarding as incomplete and navigates to it.
+  Future<void> _replayOnboarding(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(onboardingCompleteKey, false);
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+    );
+  }
+
   Future<void> _selectTime(BuildContext context) async {
     final provider = context.read<BreakProvider>();
-    final TimeOfDay? picked = await showTimePicker(
+    final picked = await showTimePicker(
       context: context,
       initialTime: provider.reminderTime,
       helpText: 'Select Reminder Time',
     );
-    if (picked != null &&
-        (picked.hour != provider.reminderTime.hour ||
-            picked.minute != provider.reminderTime.minute)) {
+    if (picked != null) {
       await provider.setReminderTime(picked);
     }
   }
@@ -113,6 +125,7 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         children: <Widget>[
+          // Appearance
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Text(
@@ -138,6 +151,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const Divider(height: 24, indent: 16, endIndent: 16),
 
+          // Daily Reminder
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Text(
@@ -175,6 +189,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const Divider(height: 24, indent: 16, endIndent: 16),
 
+          // Data Management
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Text(
@@ -192,7 +207,8 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.upload_outlined),
             title: const Text('Import Data'),
-            subtitle: const Text('Restore from a previously exported JSON backup.'),
+            subtitle:
+            const Text('Restore from a previously exported JSON backup.'),
             onTap: () => _importData(context),
           ),
           ListTile(
@@ -205,6 +221,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const Divider(height: 24, indent: 16, endIndent: 16),
 
+          // Help & Feedback
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Text(
@@ -236,6 +253,13 @@ class SettingsScreen extends StatelessWidget {
                 applicationLegalese: '© 2025 Clarity Break Inc.',
               );
             },
+          ),
+          // Replay Onboarding
+          ListTile(
+            leading: const Icon(Icons.restart_alt),
+            title: const Text('Show Onboarding Again'),
+            subtitle: const Text('Replay the intro tutorial'),
+            onTap: () => _replayOnboarding(context),
           ),
         ],
       ),

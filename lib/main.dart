@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'providers/achievement_provider.dart';
 import 'providers/break_provider.dart';
 import 'providers/theme_provider.dart';
 import 'screens/splash_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'services/notification_service.dart';
 
-void main() async {
+/// Key in SharedPreferences to track whether onboarding has been completed.
+const String onboardingCompleteKey = 'onboardingComplete';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Reschedule notifications on device reboot
   const bootChannel = MethodChannel('clarity_break/boot');
   bootChannel.setMethodCallHandler((call) async {
     if (call.method == 'onBootCompleted') {
@@ -23,6 +30,10 @@ void main() async {
     }
   });
 
+  // Decide whether to show onboarding
+  final prefs = await SharedPreferences.getInstance();
+  final bool showOnboarding = !(prefs.getBool(onboardingCompleteKey) ?? false);
+
   runApp(
     MultiProvider(
       providers: [
@@ -30,13 +41,15 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AchievementProvider()..load()),
       ],
-      child: const ClarityBreakApp(),
+      child: ClarityBreakApp(showOnboarding: showOnboarding),
     ),
   );
 }
 
+/// Root widget. Chooses between Onboarding or Splash based on saved flag.
 class ClarityBreakApp extends StatelessWidget {
-  const ClarityBreakApp({super.key});
+  final bool showOnboarding;
+  const ClarityBreakApp({super.key, required this.showOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +61,11 @@ class ClarityBreakApp extends StatelessWidget {
       theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
       themeMode: themeProvider.mode,
-      home: const SplashScreen(),
+      home: showOnboarding ? const OnboardingScreen() : const SplashScreen(),
     );
   }
 
+  /// Builds a Material3-based theme from a seed color.
   ThemeData _buildTheme(Brightness brightness) {
     final isLight = brightness == Brightness.light;
     final base = isLight ? ThemeData.light() : ThemeData.dark();
@@ -65,8 +79,7 @@ class ClarityBreakApp extends StatelessWidget {
       surface: isLight ? Colors.white : const Color(0xFF1E1E1E),
       onPrimary: isLight ? Colors.white : Colors.black,
       onSecondary: isLight ? Colors.black : Colors.white,
-      onBackground:
-      isLight ? const Color(0xFF424242) : const Color(0xFFE0E0E0),
+      onBackground: isLight ? const Color(0xFF424242) : const Color(0xFFE0E0E0),
       onSurface: isLight ? const Color(0xFF424242) : const Color(0xFFE0E0E0),
       error: Colors.redAccent,
       onError: isLight ? Colors.white : Colors.black,
@@ -132,7 +145,7 @@ class ClarityBreakApp extends StatelessWidget {
         ),
       ),
 
-      // ← **Fixed**: use CardThemeData, not the widget CardTheme
+      // ← **FIX**: use CardThemeData not CardTheme
       cardTheme: CardThemeData(
         elevation: 2,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

@@ -1,57 +1,59 @@
 // lib/screens/splash_screen.dart
-import 'package:flutter/material.dart';
-import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart'; // Splash screen package
-import 'main_screen.dart'; // Import the main navigation screen
 
-// Displays the splash screen on app startup
-class SplashScreen extends StatelessWidget {
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'onboarding_screen.dart';
+import 'main_screen.dart';
+
+const _onboardingCompleteKey = 'onboardingComplete';
+
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _goNext();
+  }
+
+  Future<void> _goNext() async {
+    await Future.delayed(const Duration(milliseconds: 1500));
+    final prefs = await SharedPreferences.getInstance();
+    final done = prefs.getBool(_onboardingCompleteKey) ?? false;
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => done ? const MainScreen() : const OnboardingScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Access theme data
-
-    // Use package for fade-in splash effect
-    return FlutterSplashScreen.fadeIn(
-      backgroundColor: theme.colorScheme.background, // Match app background
-      duration: const Duration(milliseconds: 3000), // Display duration (3 seconds)
-      onInit: () {
-        debugPrint("Splash init"); // Optional: Log splash start
-      },
-      onEnd: () {
-        debugPrint("Splash end"); // Optional: Log splash end
-      },
-      // Content displayed during splash
-      childWidget: SizedBox(
-        width: 200, // Constrain content size
-        height: 200,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // TODO: Replace with Image.asset('assets/images/logo.png') when logo is ready
-            Image.asset( // Display logo or placeholder
-              'assets/images/logo.png', // <<<=== YOUR LOGO PATH HERE
-              height: 100,
-              errorBuilder: (ctx, err, st) => Icon( // Fallback icon
-                Icons.spa_outlined, // Placeholder icon (wellness/clarity)
-                size: 80.0,
-                color: theme.colorScheme.primary, // Use primary theme color
-              ),
-            ),
-            const SizedBox(height: 20), // Spacing
-            Text(
-              "Clarity Break", // App name
-              style: theme.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.primary, // Use primary theme color
-              ),
-            ),
-          ],
-        ),
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: theme.colorScheme.background,
+      body: Center(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset(
+            'assets/images/logo.png',
+            height: 100,
+            errorBuilder: (_, __, ___) =>
+                Icon(Icons.spa_outlined, size: 80, color: theme.colorScheme.primary),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            "Clarity Break",
+            style: theme.textTheme.headlineMedium
+                ?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.primary),
+          ),
+        ]),
       ),
-      // Screen to navigate to after splash duration
-      // *** FIX: Removed 'const' because MainScreen is StatefulWidget ***
-      nextScreen: MainScreen(), // Navigate to the main app screen
     );
   }
 }
