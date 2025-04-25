@@ -1,6 +1,6 @@
 name: clarity_break
 description: "Cannabis tolerance break tracker"
-version: 1.0.0+1
+version: 1.1.0+1
 
 environment:
   sdk: ">=2.18.0 <4.0.0"
@@ -46,7 +46,7 @@ dev_dependencies:
   flutter_native_splash: ^2.2.17
 
 # flutter_launcher_icons configuration
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: assets/images/logo.png

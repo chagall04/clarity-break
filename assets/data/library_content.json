@@ -1,43 +1,43 @@
 [
   {
-    "category_id": "tolerance_science",
-    "category_title": "Tolerance & Science",
+    "category_id": "tolerance_basics",
+    "category_title": "Tolerance Basics & Science",
     "category_icon": "science",
     "articles": [
       {
         "article_id": "tol_what_is",
-        "title": "What Exactly is Tolerance?",
+        "title": "What Exactly IS Tolerance?",
         "tags": ["science","tolerance"],
         "featured": true,
-        "content": "Ever feel like you need more to get the same vibe? That’s tolerance kicking in. When you regularly use cannabinoids like THC, HHC, or Delta-8, your brain’s CB₁ receptors adapt—they down-regulate (lose some ‘locks’) and desensitize (make the remaining ‘locks’ harder to turn). This natural homeostasis means the same dose yields less effect over time. A full **28-day break** lets your receptors reset, restoring sensitivity so you can enjoy smaller amounts for the same high."
+        "content": "Ever notice it takes more product to achieve the same feeling? That's **cannabis tolerance** developing. It's a natural biological process.\n\n### How it Happens:\nYour brain has specialized docking sites called **CB1 receptors**. Cannabinoids like THC, HHC, Delta-8, etc., act like keys fitting into these receptor locks to produce effects. When these receptors are frequently activated, your brain adapts to maintain balance (homeostasis) by:\n\n*   **Downregulation:** Reducing the number of available CB1 receptors (removing some 'locks').\n*   **Desensitization:** Making the remaining receptors less responsive to the cannabinoids (making the 'locks' harder to turn).\n\n### The Result:\nThe same dose produces a weaker effect over time. Taking a tolerance break, especially the recommended **28 days**, allows your brain to restore these receptors (upregulation), making you sensitive again so smaller amounts are effective."
       },
       {
         "article_id": "tol_science_simple",
-        "title": "The Science (No PhD Required!)",
+        "title": "The Science Explained Simply",
         "tags": ["science","overview"],
         "featured": false,
-        "content": "Super simple breakdown:\n\n1. **Receptors = Locks, Cannabinoids = Keys:** THC, HHC, Delta-8 fit into CB₁ receptors.\n2. **Too Many Keys:** Frequent use floods your system; your brain removes locks or makes them stiffer.\n3. **The Break = Locksmith Time:** Pausing gives your brain time to rebuild and re-sensitize those locks.\n4. **Welcome Back:** Keys work smoothly again—smaller doses, stronger effects.\n\nMost users feel a reset in **7–14 days**, but a full **28-day** pause gives the deepest reboot."
+        "content": "Let's simplify the biology:\n\n1.  **Locks & Keys:** Think of CB1 receptors as 'locks' in your brain. THC, HHC, etc., are the 'keys' that fit them.\n2.  **Too Many Keys:** Frequent use means the locks are constantly being turned. Your brain responds by reducing the number of locks or making them less sensitive.\n3.  **The Break:** Taking time off allows the brain's 'maintenance crew' to repair existing locks and install new ones.\n4.  **Sensitivity Returns:** After the break, the keys work much better because the locks are refreshed and plentiful.\n\n### How Long Does a Reset Take?\n*   **Quick Boost (Noticeable):** Often felt within **3-7 days**.\n*   **Significant Reset:** Usually requires **14-21 days** for substantial receptor recovery.\n*   **Full Reboot (Recommended):** **21-28 days** allows for a near-complete return to baseline sensitivity. This is why 28 days is often suggested."
       },
       {
         "article_id": "tol_hhc_etc",
-        "title": "Tolerance to HHC, Delta-8 & More",
+        "title": "Tolerance to HHC, Delta-8 & More?",
         "tags": ["science","cross-tolerance"],
         "featured": false,
-        "content": "Newer cannabinoids (HHC, HHCP, THCP, Delta-8) act on the same CB₁ receptors as Delta-9 THC. That means **cross-tolerance**—using one raises tolerance to all. If you’re vaping HHC or trying Delta-8, you’ll still build tolerance on the same timeline. A 28-day break resets them all."
+        "content": "Yes! Most alternative cannabinoids gaining popularity (HHC, HHCP, THCP, Delta-8, Delta-10, THCa converted by heat, etc.) primarily activate the same **CB1 receptors** as traditional Delta-9 THC.\n\n### Key Points:\n*   **Cross-Tolerance is Real:** Building tolerance to one compound usually increases your tolerance to others that use the same pathway. Switching cannabinoids won't prevent tolerance long-term.\n*   **Potency Doesn't Stop It:** Even very potent novel cannabinoids will eventually feel weaker with regular use.\n*   **Breaks Work Universally:** A tolerance break helps reset sensitivity across the board for these related compounds because it addresses the underlying receptor adaptation.\n\nIf a cannabinoid produces psychoactive effects mainly via CB1 receptors, expect tolerance to build and breaks to be effective."
       },
       {
         "article_id": "tol_consumption_methods",
-        "title": "Does How I Consume Matter?",
+        "title": "Does Consumption Method Affect Tolerance?",
         "tags": ["science","methods"],
         "featured": false,
-        "content": "Yes—the delivery method influences how fast tolerance builds:\n\n• **Smoking/Vaping:** Instant high & high bioavailability → faster tolerance.\n• **Edibles:** Liver converts THC into potent 11-hydroxy-THC → long-lasting effect, builds if daily.\n• **Concentrates (Dabbing):** Ultra-potent dose → quickest receptor down-regulation.\n\nTip: sprinkle in sports, a tall glass of water or milk, or even a spoonful of cod-liver oil on off-days to slow the climb."
+        "content": "Yes, the way you consume impacts how quickly and intensely cannabinoids reach your brain, influencing tolerance development:\n\n*   **Inhalation (Smoking/Vaping):** Very fast onset (<10 mins), high bioavailability (efficient absorption). This rapid, intense receptor activation can lead to quicker tolerance buildup with frequent use.\n*   **Edibles:** Slow onset (30-120 mins), processed by the liver into potent 11-hydroxy-THC. Effects are long-lasting. While frequency is key, regular high-dose edible use can create strong tolerance due to the potency and duration of 11-hydroxy-THC.\n*   **Concentrates (Dabs, High-Potency Carts):** Deliver very high doses rapidly. Often leads to the most rapid and significant tolerance increases.\n*   **Tinctures (Sublingual):** Faster onset than edibles (15-45 mins), moderate absorption. Tolerance build-up is typically between inhalation and edibles.\n\n**Overall:** Frequency and dosage amount are the primary drivers, but methods delivering high doses quickly tend to accelerate tolerance the most."
       },
       {
         "article_id": "tol_potentiation_myths",
         "title": "Potentiation Myths Busted",
         "tags": ["science","myths"],
         "featured": false,
-        "content": "You’ve heard mangoes or fatty foods boost your high. Reality:\n\n• **Mango/Myrcene:** Anecdotal; terpenes might tweak perception but won’t outpace tolerance.\n• **Fats (milk, cod-liver oil):** Help absorption slightly, but your #1 lever is a lower tolerance via a break.\n• **Exercise:** Better blood flow can subtly alter effects, but it’s no substitute for downtime."
+        "content": "Can certain foods or habits make your high stronger or last longer? Let's examine common claims:\n\n### Mangoes (Myrcene)\n*   **Claim:** The terpene myrcene in mangoes enhances THC effects.\n*   **Reality:** While myrcene *is* found in both, scientific evidence for a significant synergistic effect in humans is weak and mostly anecdotal. It won't overcome established tolerance.\n\n### Fatty Foods (Milk, Oils)\n*   **Claim:** Fats increase cannabinoid absorption.\n*   **Reality:** This applies mainly to **edibles**, where fats can aid the absorption of THC through the digestive system. It has minimal impact on inhalation methods. It might make an edible dose feel slightly more consistent, but won't dramatically 'boost' a high like lowering tolerance will.\n\n### Exercise\n*   **Claim:** Working out before or after enhances effects.\n*   **Reality:** Increased blood flow might slightly alter perception or onset speed for some, but it's not a reliable potentiation method. Exercise *is* great for well-being during a break!\n\n**Key Point:** The most effective way to increase the perceived strength of cannabis effects is to **lower your tolerance** via a break."
       }
     ]
   },
@@ -51,49 +51,49 @@
         "title": "Why a 28-Day Break Rocks",
         "tags": ["break","benefits"],
         "featured": true,
-        "content": "Aim for **28 days** off and you’ll:\n\n• **Feel More with Less:** Smaller doses go further—big savings.\n• **Rediscover Nuance:** Flavors, aromas & subtle effects pop again.\n• **Mindful Check-In:** Is cannabis a choice or a habit?\n• **Mental Refresh:** Many report better sleep, sharper focus & more energy after day 7."
+        "content": "Committing to a deliberate pause, especially the recommended **28 days**, offers significant advantages:\n\n### Reset Your Sensitivity\n*   **Feel More, Use Less:** This is the core benefit! Regain sensitivity so smaller doses are effective again. Saves money and product.\n*   **Rediscover the Experience:** High tolerance often dulls the unique effects, flavors, and aromas. A reset brings back the nuance.\n\n### Boost Your Well-being\n*   **Mental Clarity:** Many users notice reduced 'brain fog', improved concentration, and sharper memory.\n*   **Better Sleep:** After a possible initial adjustment phase (e.g., vivid dreams), natural sleep cycles often improve.\n*   **Increased Energy:** Less sedation can lead to feeling more naturally vibrant.\n\n### Gain Insight\n*   **Mindful Check-in:** Evaluate your usage patterns. Is it intentional or habitual? Does it align with your current life goals?"
       },
       {
         "article_id": "tip_prepare",
         "title": "Set Yourself Up for Success",
         "tags": ["break","planning"],
         "featured": false,
-        "content": "1. **Write Your Why:** Pin it in the app.\n2. **Stash Your Gear:** Out of sight, out of mind.\n3. **Plan Activities:** Sports, cooking, reading, or coding—beat boredom.\n4. **Hydrate & Nourish:** Water, herbal teas, milk or a spoon of cod-liver oil.\n5. **Buddy System:** Tell a friend—accountability is powerful."
+        "content": "A little preparation dramatically increases your chances of completing your break successfully:\n\n1. **Solidify Your 'Why':** Before starting, really connect with your reason. Keep it visible in the app (Home screen) as your primary motivator.\n2. **Stash Management:** Put all cannabis products and paraphernalia completely out of sight and ideally in a spot that requires effort to access.\n3. **Plan for Trigger Times:** Identify when you usually consume (e.g., after work, before bed). Schedule specific alternative activities *in advance* for these times.\n4. **Healthy Environment:** Stock your kitchen with water, herbal teas, and healthy snacks. Remove temptations if possible.\n5. **Inform Your Circle (Optional):** Let supportive friends/family know you're taking a break to manage expectations and potentially gain encouragement.\n6. **Anticipate Challenges:** Mentally prepare for potential cravings or mood shifts, especially in the first week. Having coping strategies ready (see other articles) makes them easier to handle."
       },
       {
         "article_id": "tip_cravings",
         "title": "Surfing the Urge Wave",
         "tags": ["break","cravings"],
         "featured": false,
-        "content": "Urges peak in **15–20 minutes** then fade. Ride them out:\n\n• **Notice Without Judgement:** “I’m having an urge”—no fight, just observe.\n• **Distract Fast:** Jump up, blast music, call a friend, do push-ups or a quick sprint.\n• **Deep Breathing:** Inhale 4s, hold 4s, exhale 6s.\n• **Revisit Your Why:** A glance at your motivation resets resolve."
+        "content": "Cravings are normal physiological and psychological responses, especially in the early stages of a break. They feel strong but are **temporary**, typically peaking within **15-20 minutes**.\n\n### Techniques to Manage:\n*   **Observe, Don't Judge:** Acknowledge the feeling without reacting negatively. \"Okay, a craving is present.\" \n*   **Distract Actively:** Immediately change your environment or activity. Stand up, walk, listen to loud music, call someone, do a quick physical task (pushups, cleaning).\n*   **Engage Other Senses:** Chew strong gum, sip cold water, smell peppermint oil, splash cool water on your face.\n*   **Deep Breathing:** Inhale slowly (count 4), hold gently (count 4), exhale slowly (count 6). Repeat 5-10 times to calm your nervous system.\n*   **Revisit Your 'Why':** A quick look at your motivation on the Home screen can reinforce your commitment.\n*   **Delay Tactic:** Tell yourself, \"I can choose to use later, but not right now.\" Often the urge passes before 'later' arrives."
       },
       {
         "article_id": "tip_alternatives",
         "title": "Healthy Alternatives",
         "tags": ["break","alternatives"],
         "featured": false,
-        "content": "Channel your energy into:\n\n• **Sports & Movement:** Basketball, running, yoga—endorphin boosters.\n• **Creative Flow:** Sketch, write, play music, cook a new recipe.\n• **Mindful Moments:** Meditation apps, long shower, reading.\n• **Hydration Breaks:** Swap a puff for a big glass of water or milk."
+        "content": "Fill the time usually spent consuming with activities that support your well-being or goals:\n\n### Physical Outlets:\n*   **Exercise:** Any form releases endorphins and reduces stress (walking, running, gym, yoga, dancing, sports).\n*   **Mindful Movement:** Gentle stretching or Tai Chi.\n\n### Mental Engagement:\n*   **Learn Something New:** Language apps (Duolingo), online courses (Coursera, Skillshare), documentaries.\n*   **Creative Expression:** Drawing, painting, writing, playing music, coding, cooking, gardening.\n*   **Focused Activities:** Reading, puzzles, strategy board/video games.\n\n### Relaxation & Connection:\n*   **Mindfulness Practices:** Guided meditation apps (Calm, Headspace, Insight Timer), simple breath focus.\n*   **Sensory Relaxation:** Warm bath/shower, listening to calming music/podcasts, enjoying herbal tea.\n*   **Social Connection:** Plan non-using activities with supportive friends/family (coffee, walk, movie, game night)."
       },
       {
         "article_id": "tip_sleep_issues",
         "title": "Sleep Support During Your Break",
         "tags": ["break","sleep"],
         "featured": false,
-        "content": "Cannabis helps some sleep—but during a break you may see vivid dreams or restlessness. Try:\n\n• **Consistent Schedule:** Same bedtime & wake time.\n• **Wind-Down Routine:** Dim lights, no screens 1h before bed, gentle stretching.\n• **Optimize Your Space:** Dark, cool, quiet.\n• **Herbal Aids:** Chamomile tea, valerian, or low-dose melatonin (check with your doc)."
+        "content": "If cannabis was part of your sleep routine, expect potential temporary changes like difficulty falling asleep or more vivid dreams. This usually improves within 1-2 weeks as your natural sleep cycle adjusts.\n\n### Improve Sleep Hygiene:\n*   **Consistent Schedule:** Maintain regular bedtimes and wake times (+/- 30 mins), even on weekends.\n*   **Relaxing Wind-Down:** In the hour before bed, avoid screens (phones, TV, computers), dim lights, read a physical book, do gentle stretches, take a warm bath, listen to calming audio.\n*   **Optimize Bedroom:** Keep it dark (blackout curtains), quiet (earplugs if needed), and cool.\n*   **Avoid Evening Stimulants:** Limit caffeine after noon/early afternoon. Avoid large meals or excessive fluids close to bed.\n*   **Morning Light:** Exposure to natural daylight shortly after waking helps set your internal clock.\n*   **Natural Aids (Use Mindfully):** Consider short-term use of low-dose melatonin, magnesium glycinate, or calming teas like chamomile or valerian root. Focus on building good habits rather than relying on aids long-term. Consult a doctor for persistent issues."
       },
       {
         "article_id": "tip_hydration_nutrition",
         "title": "Hydration & Nutrition Hacks",
         "tags": ["break","nutrition","hydration"],
         "featured": false,
-        "content": "Fuel your reset with:\n\n• **Water First:** Sip throughout the day—fatigue and headaches drop.\n• **Whole Foods:** Colorful fruits/veggies, lean proteins, healthy fats.\n• **Limit Sugar & Processed Foods:** Avoid crashes that mimic cravings.\n• **Herbal Teas:** Peppermint, ginger, hibiscus for flavor + function."
+        "content": "Supporting your body physically can significantly ease the mental and emotional aspects of a break.\n\n### Hydration:\n*   **Water is Essential:** Aim for consistent intake throughout the day. Dehydration can worsen fatigue, headaches, and sometimes even trigger cravings.\n*   **Make it Appealing:** Add lemon, lime, cucumber, or mint to water. Explore herbal teas (peppermint, ginger, hibiscus, chamomile) for flavor and potential calming benefits.\n\n### Nutrition:\n*   **Focus on Whole Foods:** Prioritize fruits, vegetables, lean proteins, whole grains, nuts, seeds, and healthy fats. These provide sustained energy and nutrients.\n*   **Balance Blood Sugar:** Limit refined sugars and simple carbs (white bread, pastries, sugary drinks) which cause energy crashes and can worsen mood swings.\n*   **Support Gut Health:** Include fiber-rich foods and consider probiotics (yogurt, kefir, etc.), as gut health is linked to mood.\n*   **Healthy Fats:** Omega-3s (found in fish, flaxseed, chia seeds, walnuts) are crucial for brain function."
       },
       {
         "article_id": "tip_cbd_during_break",
-        "title": "Using CBD on Your T-Break",
+        "title": "Using CBD During Your Break",
         "tags": ["break","cbd"],
         "featured": false,
-        "content": "Yes—**THC-free CBD isolate** won’t bind CB₁ receptors. Many find CBD helps ease anxiety, cravings or sleep issues. **Avoid** full-spectrum products with any THC if you want a true reset."
+        "content": "Can you use CBD without impacting your THC tolerance reset? Yes, if you choose carefully.\n\n### Product Choice Matters:\n*   **Use CBD Isolate ONLY:** This form contains 99%+ pure CBD and **0.0% THC**. Check third-party lab reports (Certificates of Analysis - CoAs) to verify non-detectable THC.\n*   **Why Isolate?** CBD interacts differently with the endocannabinoid system than THC/HHC and doesn't significantly activate the CB1 receptors you are resting.\n*   **AVOID Full-Spectrum & Broad-Spectrum:** Full-spectrum legally contains up to 0.3% THC (in the US). Broad-spectrum aims for zero THC but may contain other minor cannabinoids. While THC levels are low, they *can* still interact with CB1 receptors and potentially slow your reset.\n\n### Potential Benefits:\nSome individuals find THC-free CBD isolate helpful for managing temporary break symptoms like increased anxiety, irritability, or difficulty sleeping.\n\n**Bottom Line:** Verified THC-free CBD isolate is unlikely to interfere with your primary goal of resetting THC/HHC tolerance."
       }
     ]
   },
@@ -104,37 +104,44 @@
     "articles": [
       {
         "article_id": "post_reintroduction",
-        "title": "Re-Entry: Start Low, Go Slow!",
+        "title": "Re-Entry Strategy: Start Low, Go Slow!",
         "tags": ["reintroduction","safety"],
         "featured": true,
-        "content": "Congrats on your 28-day break! Now—**reset**, not reduced:\n\n1. **Tiny First Dose:** One small puff or 1–2.5 mg edible.\n2. **Wait Fully:** Inhale → 15–30 min. Edible → 1.5–2 h.\n3. **Assess Honestly:** Note effects before adding more.\n4. **Log It:** Journal your dose & mood to find your sweet spot."
+        "content": "Congratulations! You've completed your break and reset your sensitivity. Now, approach reintroduction mindfully to avoid instantly rebuilding tolerance.\n\n### The Golden Rule: START LOW, GO SLOW!\nYour tolerance is significantly reduced. Treat it like you're almost starting fresh.\n\n*   **Dose Size:** Begin with a **very small fraction** of your pre-break dose (e.g., 25-50%). Think *one* small puff, or a microdose-level edible (1-2.5mg THC).\n*   **Waiting Period:** Patience is critical. Allow effects to fully develop before *any* redosing.\n    *   *Inhalation:* Wait **15-30+ minutes**.\n    *   *Edibles/Tinctures:* Wait **90-120+ minutes (1.5-2 hours minimum)**.\n*   **Mindful Assessment:** Check in with yourself. How strong are the effects? Are they pleasant? Where are you on a 1-10 scale? You might find your ideal experience is at a much lower level now.\n*   **Journal Everything:** Use the 'Track Experience' button in the Journal tab. Log the amount, type, effects, mood, and any relevant notes. This data helps you understand your new baseline and make informed choices moving forward."
       },
       {
         "article_id": "post_maintaining",
         "title": "Keep Your Sensitivity Fresh",
         "tags": ["maintenance","habit"],
         "featured": false,
-        "content": "To stretch out that low-tolerance window:\n\n• **Use Less Often:** Weekends or special occasions.\n• **Microdose:** 1–2 mg occasionally instead of full sessions.\n• **Short Mini-Breaks:** 3–7 day pauses every month.\n• **Mindful Moments:** Be present—ditch autopilot hits."
+        "content": "Want to maintain the benefits of your lower tolerance? It requires conscious effort and adjusting old patterns.\n\n### Effective Strategies:\n*   **Reduce Frequency:** This is arguably the most impactful change. Can you shift from daily use to only weekends or specific planned occasions? Limiting the number of days you consume per week significantly slows tolerance buildup.\n*   **Control Your Dose:** Stick to the minimum amount required to achieve your desired effect. Resist the urge to consume more just because you used to.\n*   **Be Intentional:** Consume mindfully, not automatically. Ask yourself *why* you are using in that moment.\n*   **Schedule Mini-Breaks:** Plan short, regular breaks (e.g., 2-4 days off every few weeks, or 1 week off per month) to prevent tolerance from creeping back up significantly.\n*   **Avoid 'Wake and Bake':** Using early in the day can sometimes accelerate tolerance for some users.\n*   **Consider Alternating:** If feasible, try alternating between higher potency days and lower potency days, or incorporating CBD-rich/low-THC options."
       },
       {
         "article_id": "post_myths",
         "title": "Post-Break Myths Busted",
         "tags": ["myths","clarity"],
         "featured": false,
-        "content": "• **Myth:** Switching strains stops tolerance. **Fact:** CB₁ interaction drives tolerance, not terpenes.\n• **Myth:** Holding hits longer ups THC uptake. **Fact:** Most absorption is instant—holding just robs oxygen.\n• **Myth:** Mangoes or cod-liver oil supercharge the high. **Fact:** Anecdotal at best—your real power is a lower tolerance."
+        "content": "Let's clear up some common misunderstandings about using cannabis after a tolerance break:\n\n*   **Myth:** My tolerance is gone forever, like when I first started.\n    **Fact:** Your sensitivity is significantly reset, but tolerance *can* rebuild, often more quickly than it did originally if you return immediately to frequent, high-dose patterns.\n*   **Myth:** Switching strains tricks my tolerance.\n    **Fact:** While different terpene/cannabinoid profiles create different experiences, tolerance to THC/HHC is primarily driven by CB1 receptor activation, which happens regardless of strain.\n*   **Myth:** Holding in smoke or vapor longer gets you higher.\n    **Fact:** The vast majority of cannabinoids are absorbed within the first few seconds. Holding longer primarily increases tar intake and causes temporary oxygen deprivation, not significantly more cannabinoid absorption.\n*   **Myth:** I need 'enhancers' like mangoes or special foods now.\n    **Fact:** Your **lowered tolerance** is the most powerful enhancer. Focus on finding your new minimum effective dose through careful reintroduction ('Start Low, Go Slow')."
       },
       {
         "article_id": "post_next_break",
         "title": "When’s Your Next 28-Day Break?",
         "tags": ["planning","schedule"],
         "featured": false,
-        "content": "Listen to the signs:\n\n• You need noticeably more for the same effect.\n• Sessions feel flat or muted.\n• Habit-driven use replaces intentional dosing.\n\n**Rule of thumb:** 3–7 day micro-breaks monthly, and a **28-day** deep break every 6–12 months."
+        "content": "There's no single 'right' time, but monitoring your experience provides clues.\n\n### Signs It Might Be Time for Another Reset:\n*   **Dose Creep:** You notice you consistently need more product (higher dose or more frequent redosing) to achieve the effects you desire.\n*   **Muted Effects:** The desired positive effects (e.g., euphoria, relaxation, creativity) feel less pronounced, shorter-lasting, or 'flatter'.\n*   **Increased Habitual Use:** You find yourself using more automatically or to cope with boredom, rather than for specific, intentional reasons.\n*   **Return of Side Effects:** Minor unwanted effects like 'brain fog', lethargy, or increased anxiety start becoming more noticeable again.\n*   **Budget Impact:** You're spending significantly more to achieve the same results.\n\n### General Scheduling Suggestions:\n*   **Maintenance 'Mini-Breaks':** Consider short breaks (e.g., 3-7 days) every 1-3 months.\n*   **Full Reset 'Clarity Breaks':** Plan a longer break (e.g., **21-28 days**) every 6-12 months, depending on your usage between breaks.\n\n**Use Your Journal Data:** Reviewing your 'Track Experience' logs after your last break can reveal how quickly *your* tolerance rebuilds based on *your* specific usage patterns, helping you plan proactively."
+      },
+      {
+        "article_id": "post_pairing_with_food",
+        "title": "Pairing Cannabis with Meals",
+        "tags": ["after_break", "food", "absorption"],
+        "featured": false,
+        "content": "Can eating affect your cannabis experience?\n\n### For Edibles:\n*   **With Fat is Key:** Consuming edibles with a meal or snack containing healthy fats (e.g., avocado, nuts, yogurt, cheese, olive oil) significantly improves the absorption of THC and other cannabinoids through the digestive system, leading to more consistent and potentially stronger effects compared to an empty stomach.\n*   **Avoid Empty Stomach (Usually):** Taking edibles on an empty stomach can lead to faster but potentially more unpredictable and intense onset for some.\n\n### For Inhalation:\n*   **Less Direct Impact:** Food has much less direct impact on absorption when smoking or vaping.\n*   **Managing Munchies:** Having healthy snacks prepared *before* a session can help you make better choices if munchies strike.\n*   **Blood Sugar:** Avoid consuming on an empty stomach if you're prone to dizziness or drops in blood sugar.\n\n**Overall:** Pairing edibles with fat is generally recommended. For other methods, focus on being hydrated and not overly hungry or full."
       }
     ]
   },
   {
-    "category_id": "microdosing",
-    "category_title": "Microdosing 101",
+    "category_id": "microdosing_mastery",
+    "category_title": "Microdosing Mastery",
     "category_icon": "science",
     "articles": [
       {
@@ -142,175 +149,49 @@
         "title": "What Is Microdosing?",
         "tags": ["microdosing","method"],
         "featured": true,
-        "content": "Microdosing means taking **sub-psychoactive** amounts—just enough to feel a subtle mood or focus boost without a full high. Typical protocols: 1–2 mg THC (or HHC equivalent) every other day. Track it in your journal!"
+        "content": "**Microdosing** involves taking cannabis doses so small they are **sub-perceptual** or only minimally psychoactive. The goal isn't a traditional 'high', but rather subtle effects like enhanced focus, creativity, mood elevation, or anxiety reduction, without significant impairment.\n\n**Typical Protocol:** 1–2 mg THC (or HHC equivalent) every other day.\n\nTrack in your journal to find your personal minimal effective dose."
       },
       {
-        "article_id": "micro_benefits",
-        "title": "Potential Benefits & Risks",
-        "tags": ["microdosing","benefits"],
+        "article_id": "micro_protocols",
+        "title": "Common Microdosing Protocols",
+        "tags": ["microdosing","protocols"],
         "featured": false,
-        "content": "Reported upsides: improved focus, steady mood, creativity boost. Risks: you can still build tolerance, and you might mask deeper issues. Always start ultra-low and log daily."
+        "content": "Consistency helps when finding your rhythm:\n\n*   **Fadiman Style (Adapted):** 1 day 'on', 2 days 'off'. Helps prevent building tolerance to the microdose itself.\n*   **Alternate Days:** Dose every other day.\n*   **Intuitive:** Dose only as needed for specific situations (e.g., before a creative task, for social anxiety).\n*   **Work Week / Weekend Off:** Microdose Mon-Fri, take Sat/Sun off.\n\n### Finding Your Dose:\n1. Start extremely low (e.g., 1mg THC).\n2. Wait for full potential onset (up to 2 hours for edibles).\n3. Assess: Note subtle changes in mood, focus, anxiety. Any unwanted impairment?\n4. Adjust Slowly: Increase only by 0.5–1mg on the *next* 'on' day.\n5. Track diligently in the Journal: Dose, time, effects, context."
       },
       {
-        "article_id": "micro_hydration_sports",
-        "title": "Boost Your Microdosing with Water & Workouts",
-        "tags": ["microdosing","wellness"],
+        "article_id": "micro_tracking",
+        "title": "Tracking & Optimizing Your Microdose",
+        "tags": ["microdosing","journal"],
         "featured": false,
-        "content": "Swapping one microdose session for a swim, run, or big glass of water can refresh your system and keep tolerance in check. Think of exercise and hydration as micro-break helpers."
+        "content": "Effective microdosing relies on careful observation and tracking.\n\n### Key Metrics to Log in Your Journal:\n*   **Dose & Time:** Exact amount (mg) and time taken.\n*   **Product:** Type (tincture, edible) and strain/brand if known.\n*   **Intention:** Why did you take the microdose?\n*   **Mood Rating:** Before and 1–2 hours after dosing (use the 1–5 scale).\n*   **Focus/Productivity:** Subjective notes on clarity and output.\n*   **Anxiety Level:** Any noticeable reduction or increase?\n*   **Creativity:** Any perceived boost?\n*   **Side Effects:** Any slight drowsiness, dizziness, or unwanted sensations?\n*   **'Off' Day Notes:** How do you feel on non-dosing days? Any cravings or lingering effects?\n\nReviewing your journal weekly helps identify your optimal dose, timing, and protocol."
       }
     ]
   },
   {
-    "category_id": "cannabinoid_profiles",
-    "category_title": "Cannabinoid Profiles",
-    "category_icon": "science",
+    "category_id": "legal_safety",
+    "category_title": "Legal & Safety",
+    "category_icon": "gavel",
     "articles": [
       {
-        "article_id": "profile_thc_vs_cbd",
-        "title": "THC vs CBD: What’s the Difference?",
-        "tags": ["cannabinoids","comparison"],
-        "featured": true,
-        "content": "THC is the psychoactive key that turns CB₁ locks; CBD is non-intoxicating, modulates CB₁/CB₂, eases anxiety and inflammation. Together they create the “entourage effect”—a smoother ride."
-      },
-      {
-        "article_id": "profile_hhc_delta8",
-        "title": "HHC & Delta-8 Explained",
-        "tags": ["cannabinoids","alternative"],
-        "featured": false,
-        "content": "HHC is a hydrogenated THC analog—more shelf-stable, slightly milder. Delta-8 gives a clear, relaxed high vs Delta-9’s head-buzz. Both still build tolerance on CB₁—treat them like THC in your break plans."
-      },
-      {
-        "article_id": "profile_cbd_isolate_broad_full",
-        "title": "CBD Isolate vs Broad vs Full-Spectrum",
-        "tags": ["cannabinoids","cbd"],
-        "featured": false,
-        "content": "• **Isolate:** 0% THC, pure CBD—safe on a T-break.\n• **Broad-spectrum:** CBD + minor cannabinoids, trace THC possible.\n• **Full-spectrum:** All plant compounds, <0.3% THC—can nudge tolerance if you’re sensitive."
-      }
-    ]
-  },
-  {
-    "category_id": "edibles_onset",
-    "category_title": "Edibles & Onset",
-    "category_icon": "science",
-    "articles": [
-      {
-        "article_id": "edible_dosing",
-        "title": "Edibles: Dosing & Timing",
-        "tags": ["edibles","dosing"],
-        "featured": false,
-        "content": "Edibles convert THC into potent 11-hydroxy-THC in your liver—stronger, longer lasting. Start **low** (1–2.5 mg), wait **90–120 min**, then only redose if you feel nothing. Patience prevents overconsumption."
-      },
-      {
-        "article_id": "edible_tips",
-        "title": "Top Tips for Edible Success",
-        "tags": ["edibles","tips"],
-        "featured": false,
-        "content": "• Dose with a meal to slow absorption.\n• Keep water or tea nearby—dry mouth is real.\n• Track dose & effects in your journal for future reference."
-      },
-      {
-        "article_id": "edible_microdose_combo",
-        "title": "Microdosing + Edibles Combo",
-        "tags": ["edibles","microdosing"],
-        "featured": false,
-        "content": "A tiny edible (1 mg) every few days can smooth out tolerance spikes. Combine with water and light exercise for best results."
-      }
-    ]
-  },
-  {
-    "category_id": "mindful_consumption",
-    "category_title": "Mindful Consumption",
-    "category_icon": "restart_alt",
-    "articles": [
-      {
-        "article_id": "mindful_intro",
-        "title": "Mindful Consumption Techniques",
-        "tags": ["mindfulness","techniques"],
-        "featured": false,
-        "content": "Being present makes every session richer:\n\n1. **Set an Intention:** Why are you using right now?\n2. **Savor the Sensations:** Note aroma, taste, body feeling.\n3. **Pause Between Hits:** Breathe, reflect—no autopilot."
-      },
-      {
-        "article_id": "mindful_journal",
-        "title": "Use Your Journal for Mindfulness",
-        "tags": ["mindfulness","journal"],
-        "featured": false,
-        "content": "Log dose, mood & setting each time. Over weeks you’ll spot patterns—your best times, ideal doses, and when it’s time for another break."
-      }
-    ]
-  },
-  {
-    "category_id": "sleep_travel",
-    "category_title": "Sleep & Travel",
-    "category_icon": "checklist",
-    "articles": [
-      {
-        "article_id": "sleep_tb",
-        "title": "Sleep Strategies on a T-Break",
-        "tags": ["sleep","break"],
-        "featured": false,
-        "content": "You may see vivid dreams or restlessness when you stop. Try:\n\n• Consistent bed/wake times\n• Blackout curtains\n• Gentle yoga or meditation before bed\n• Chamomile or valerian tea"
-      },
-      {
-        "article_id": "legal_travel",
-        "title": "Traveling & Legal FAQs",
+        "article_id": "legal_travel_tips",
+        "title": "Traveling with Cannabis: FAQs",
         "tags": ["legal","travel"],
         "featured": false,
-        "content": "Cannabis laws vary by place. Always:\n\n• Research local regs\n• Carry lab reports for your products\n• Use TSA-compliant packaging\n• Don’t assume CBD is legal everywhere"
-      }
-    ]
-  },
-  {
-    "category_id": "hydration_nutrition",
-    "category_title": "Hydration & Nutrition",
-    "category_icon": "science",
-    "articles": [
-      {
-        "article_id": "hydration_hacks",
-        "title": "Hydration Hacks for Your Break",
-        "tags": ["hydration","health"],
-        "featured": false,
-        "content": "Flavor water with cucumber, mint or berries. Sip herbal teas (peppermint, ginger) to stay hydrated and calm."
+        "content": "Navigating cannabis laws while traveling requires caution, as regulations vary drastically.\n\n### Key Considerations:\n*   **Jurisdiction is Everything:** Laws differ between countries, states, and even cities. What's legal where you live might be illegal where you're going.\n*   **Federal vs. State (US):** Cannabis remains federally illegal in the US. Crossing state lines with cannabis products (even between two legal states) is federally prohibited. Airports and airplanes fall under federal jurisdiction.\n*   **Research Thoroughly:** *Before* traveling, check the specific laws of your destination *and* any place you'll pass through.\n*   **Product Type Matters:** Rules may differ for flower, edibles, concentrates, and CBD products.\n*   **CBD Isn't Always Okay:** Don't assume CBD is legal everywhere, especially internationally. Some places regulate it strictly.\n*   **Packaging & Lab Reports:** If traveling within a legal area where permitted, keep products in original, sealed, compliant packaging. Carrying third-party lab reports (CoAs) can sometimes be helpful but isn't a guarantee against legal issues.\n\n**Safest Bet:** When in doubt, **do not travel** across state or international borders with cannabis products."
       },
       {
-        "article_id": "nutrition_hacks",
-        "title": "Nutrition Hacks & Mood",
-        "tags": ["nutrition","health"],
+        "article_id": "safety_responsible_use",
+        "title": "Responsible Use & Harm Reduction",
+        "tags": ["safety","responsible","harm_reduction"],
         "featured": false,
-        "content": "Balance blood sugar with protein + complex carbs. Omega-3 foods (chia, flax, fish) support brain health during your T-break."
+        "content": "Using cannabis mindfully involves minimizing potential risks:\n\n*   **Impairment:** **NEVER drive** or operate heavy machinery while under the influence. Effects can last longer than you feel them.\n*   **Start Low, Go Slow:** Especially after a break or with new products. Find your minimum effective dose.\n*   **Know Your Source:** If possible, choose products from licensed dispensaries with lab testing results (CoAs).\n*   **Avoid Mixing:** Combining cannabis with alcohol or other substances significantly increases impairment and unpredictability.\n*   **Stay Hydrated & Nourished:** Drink water and avoid consuming on a totally empty stomach, especially with edibles, to mitigate dizziness or anxiety.\n*   **Set & Setting:** Consume in a safe, comfortable environment, especially when trying something new. Your mindset also impacts the experience.\n*   **Secure Storage:** Keep products safely stored away from children and pets."
       },
       {
-        "article_id": "supplements_reset",
-        "title": "Supplements to Support Reset",
-        "tags": ["nutrition","supplements"],
+        "article_id": "workplace_testing",
+        "title": "Workplace Policies & Drug Testing",
+        "tags": ["legal","work","testing"],
         "featured": false,
-        "content": "Milk thistle for liver support, cod-liver oil for healthy fats, magnesium for relaxation. Always check with your doctor first."
-      }
-    ]
-  },
-  {
-    "category_id": "community_stories",
-    "category_title": "Community Stories",
-    "category_icon": "checklist",
-    "articles": [
-      {
-        "article_id": "story_first_break",
-        "title": "My First 28-Day Break: Alex’s Story",
-        "tags": ["stories","peer"],
-        "featured": false,
-        "content": "“By day 10 I felt sharper than ever. Journaling my mood swings and weekend hikes kept me sane. Day 28—I couldn’t believe how flavorful one puff felt!” — Alex, 23"
-      },
-      {
-        "article_id": "story_microdosing_workflow",
-        "title": "How Microdosing Changed My Workflow",
-        "tags": ["stories","microdosing"],
-        "featured": false,
-        "content": "“2 mg THC twice a week—no fog, just calm focus. My creative output doubled and tolerance stayed low.” — Jordan, 25"
-      },
-      {
-        "article_id": "story_sports_reset",
-        "title": "Using Sports to Reset Tolerance",
-        "tags": ["stories","sports"],
-        "featured": false,
-        "content": "“I swapped one evening session for basketball and water smoothies. My cravings dropped and Day 28 felt effortless.” — Taylor, 21"
+        "content": "Even in legal states, employers can often maintain drug-free workplace policies.\n\n### Important Points:\n*   **Know Your Policy:** Understand your specific employer's rules regarding cannabis use and drug testing (pre-employment, random, post-incident).\n*   **Detection Windows Vary:** THC metabolites (THC-COOH), which tests look for, can stay detectable in urine for days–weeks depending on usage frequency.\n*   **Plan Breaks:** If a test is imminent, only abstinence ensures passing. A **28-day break** covers most urine tests for moderate users, but heavy users may need longer.\n*   **CBD Caution:** Full-spectrum CBD may contain trace THC—use isolate if you expect testing."
       }
     ]
   }

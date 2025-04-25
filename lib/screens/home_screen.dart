@@ -145,7 +145,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
           const SizedBox(height: 8),
 
-          // --- Motivation message card (only once) ---
+          // --- “My Why” card ---
+          if (bd.userWhy != null && bd.userWhy!.isNotEmpty)
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+              child: Card(
+                elevation: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    '“${bd.userWhy}”',
+                    style: theme.textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+
+          const SizedBox(height: 8),
+
+          // --- Motivation message card ---
           MotivationCard(message: _phrase),
 
           const SizedBox(height: 24),
@@ -186,7 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? 0
                   : (moods.reduce((a, b) => a + b) / moods.length).round();
               const emojis = ['😞', '😕', '😐', '😊', '😄'];
-              final avgEmoji = (avg >= 1 && avg <= 5) ? emojis[avg - 1] : '—';
+              final avgEmoji =
+              (avg >= 1 && avg <= 5) ? emojis[avg - 1] : '—';
               final freq = <String, int>{};
               for (var e in recent) {
                 e.changesNoticed
@@ -205,7 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Column(children: [
                         const Text('Avg Mood'),
-                        Text(avgEmoji, style: const TextStyle(fontSize: 24))
+                        Text(avgEmoji,
+                            style: const TextStyle(fontSize: 24))
                       ]),
                       Column(children: [
                         const Text('Top Change'),
